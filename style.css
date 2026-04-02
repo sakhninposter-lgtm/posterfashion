@@ -4367,3 +4367,48 @@ html[dir="rtl"] .pay-option{direction:rtl !important; text-align:right !importan
     bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+/* ===== MOBILE UX FIXES (mobile only, max-width: 900px) ===== */
+@media (max-width: 900px) {
+
+  /* Fix 1 (filter jump): no CSS needed – handled via e.preventDefault() in JS */
+
+  /* Fix 2: Cart slides UP from bottom on mobile (not from right) */
+  .cart-drawer {
+    top: auto !important;
+    right: 0 !important;
+    left: 0 !important;
+    bottom: -100% !important;
+    width: 100% !important;
+    height: 72vh !important;
+    max-height: 72vh !important;
+    border-left: none !important;
+    border-top: 1px solid rgba(255,255,255,.10) !important;
+    border-radius: 24px 24px 0 0 !important;
+    transition: bottom .3s cubic-bezier(.4,0,.2,1) !important;
+    box-shadow: 0 -12px 48px rgba(0,0,0,.50) !important;
+  }
+
+  .cart-drawer.open {
+    bottom: 0 !important;
+    right: 0 !important;
+    visibility: visible !important;
+  }
+
+  .cart-body {
+    grid-template-columns: 1fr !important;
+    grid-template-areas: "items" "summary" !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Fix 3: Translate (lang) button always on the RIGHT side of the mobile actions bar */
+  .actions {
+    direction: rtl !important;
+  }
+
+  .actions .lang-select,
+  .actions .cart-btn {
+    direction: ltr !important;
+  }
+}

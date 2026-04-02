@@ -2408,6 +2408,7 @@ function updateCart(){
     document.getElementById("mainCategoryFilters").addEventListener("click", function(e){
       const btn = e.target.closest(".filter-btn");
       if(!btn) return;
+      e.preventDefault();
       const nextMain = btn.dataset.main;
       if(selectedMainCategory !== nextMain){
         selectedSubcategories = [];
@@ -2425,6 +2426,7 @@ function updateCart(){
     document.getElementById("subFilterWrap").addEventListener("click", function(e){
       const btn = e.target.closest(".sub-btn");
       if(!btn) return;
+      e.preventDefault();
       const sub = btn.dataset.sub;
       if(selectedSubcategories.includes(sub)){
         selectedSubcategories = selectedSubcategories.filter(s => s !== sub);
@@ -2436,7 +2438,8 @@ function updateCart(){
       renderProducts();
     });
 
-    document.getElementById("saleToggle").addEventListener("click", function(){
+    document.getElementById("saleToggle").addEventListener("click", function(e){
+      e.preventDefault();
       activeDealCollection = "";
       activeDealPreview = "";
       saleOnly = !saleOnly;
@@ -2445,7 +2448,8 @@ function updateCart(){
       renderProducts();
     });
 
-    document.getElementById("newToggle").addEventListener("click", function(){
+    document.getElementById("newToggle").addEventListener("click", function(e){
+      e.preventDefault();
       activeDealCollection = "";
       activeDealPreview = "";
       newOnly = !newOnly;
@@ -2457,6 +2461,7 @@ function updateCart(){
     document.getElementById("sizeFilters").addEventListener("click", function(e){
       const btn = e.target.closest(".size-chip");
       if(!btn) return;
+      e.preventDefault();
       const size = btn.dataset.size;
       if(selectedSizes.includes(size)){
         selectedSizes = selectedSizes.filter(s => s !== size);
@@ -2471,6 +2476,7 @@ function updateCart(){
     document.getElementById("accessoryTabs").addEventListener("click", function(e){
       const btn = e.target.closest(".accessory-tab");
       if(!btn) return;
+      e.preventDefault();
       selectedAccessory = btn.dataset.acc;
       document.querySelectorAll("#accessoryTabs .accessory-tab").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
