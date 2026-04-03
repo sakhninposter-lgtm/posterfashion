@@ -2563,20 +2563,6 @@ document.addEventListener("keydown", function(e){
   if(e.key === "Escape") closeQuickView();
 });
 
-function openGate(){
-  const gate = document.getElementById("emailGate");
-  if(gate) gate.style.display = "flex";
-}
-
-document.addEventListener("DOMContentLoaded", function(){
-  setTimeout(openGate, 1200);
-});
-
-window.addEventListener("load", openGate);
-
-  
-
-
 /* ===== POSTER MERGED MOBILE FIX v3 ===== */
 (function(){
   function byId(id){ return document.getElementById(id); }
@@ -2878,3 +2864,58 @@ function renderAccessories(){
   }
 })();
 
+function openGate(force = false){
+  const gate = document.getElementById("emailGate");
+  if(!gate) return;
+
+  let shouldStayHidden = false;
+  try {
+    shouldStayHidden = localStorage.getItem("poster-email-gate-closed") === "1";
+  } catch (e) {}
+
+  if(!force && shouldStayHidden){
+    gate.style.display = "none";
+    gate.dataset.opened = "0";
+    return;
+  }
+
+  if(gate.dataset.opened === "1") return;
+  gate.dataset.opened = "1";
+  gate.style.display = "flex";
+}
+
+function closeGate(saveChoice = true){
+  const gate = document.getElementById("emailGate");
+  if(gate){
+    gate.style.display = "none";
+    gate.dataset.opened = "0";
+  }
+  if(saveChoice){
+    try {
+      localStorage.setItem("poster-email-gate-closed", "1");
+    } catch (e) {}
+  }
+}
+
+function subscribeEmail(e){
+  e.preventDefault();
+  const form = e.currentTarget || e.target;
+  const input = form ? form.querySelector('input[name="email"], input[type="email"]') : null;
+  const email = input ? input.value.trim() : "";
+  if(email){
+    alert(t("joinedOk") + "\n" + email);
+    if(input) input.value = "";
+    closeGate(true);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+  const gate = document.getElementById("emailGate");
+  if(gate){
+    gate.style.display = "none";
+    gate.dataset.opened = "0";
+  }
+  setTimeout(function(){
+    openGate(false);
+  }, 1200);
+});
